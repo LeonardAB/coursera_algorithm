@@ -11,6 +11,7 @@ package coursera;
  */
 public class QuickUnionUF {
      private int[] id;
+     private int[] sz; //for weighing improvement method
          
     public QuickUnionUF(int N){ //constructor
         id = new int[N];
@@ -33,7 +34,13 @@ public class QuickUnionUF {
     public void union (int p, int q) {
         int i = root(p);
         int j = root(q);
-        id[i] = j;
+        if (i==j) return;
+        if (sz[i]<sz[j]) {id[i]=j; sz[j]+=sz[i];}    //this will ensure that the larger tree is put higher
+        else              {id[j]=i; sz[i]+=sz[j];}   //the implication is that when a node is unioned, 
+                                                     //at most the depth will only added by 1, 
+                                                     //but the size of that branch double. 
+                                                     //so in max, there can only be lgN (2 log N) operation
+       // id[i] = j; //this line is turned off if we use the weighing improvement
     }
     
 }
