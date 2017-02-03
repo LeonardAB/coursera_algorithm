@@ -21,8 +21,9 @@ public class QuickUnionUF {
     }
     
     private int root(int i){
-        while (i != id[i]) {  //as long as the node is not the rood            
-            i=id[i];          //keep climbing the tree
+        while (i != id[i]) {  //as long as the node is not the rood, keep climbing the tree            
+            id[i]=id[id[i]];  //while climbing, move the node in question to its root (this is improvement by path compression)
+            i=id[i];          
         }
         return i;
     }
